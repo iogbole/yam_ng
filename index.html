@@ -1,0 +1,63 @@
+<html ng-app>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+    <script src="assets/js/controllers.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="assets/js/jquery.btechco.excelexport.js"></script>
+    <script src="assets/js/jquery.base64.js"></script>
+    <link rel="stylesheet" href="assets/style/style.css">
+
+    <script>
+        $(document).ready(function () {
+            $("#btnExport").click(function () {
+                $("#tblExport").btechco_excelexport({
+                    containerid: "tblExport"
+                    , datatype: $datatype.Table
+                    , filename: 'yammerUser'
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+<hr>
+<p></p>
+
+<h3> Yammer Users</h3>
+
+<div ng-controller="YammerGetUserCtrl">
+
+    <div align="left"> Filter : <input type="text" ng-model="yamUser"> &nbsp;&nbsp;&nbsp;
+        <button id="btnExport" class="toExcel">Export to excel</button>
+        <br><br></div>
+    <div class="datagrid">
+        <table id="tblExport">
+            <thead valign="top">
+            <tr>
+                <th>userID</th>
+                <th>Full Name</th>
+                <th>NetworkID</th>
+                <th>Activation Date</th>
+                <th>Face</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr ng-repeat="user in users | filter:yamUser" ng-class-even="'alt'">
+                <td> {{ user.id}}</td>
+                <td> {{ user.full_name }}</td>
+                <td> {{ user.network_id }}</td>
+                <td> {{ user.activated_at}}</td>
+                <td><img src="{{ user.mugshot_url}}"/></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
+
+
